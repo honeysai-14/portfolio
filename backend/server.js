@@ -22,9 +22,29 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
-const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173';
+const corsOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
+  : ['http://localhost:5173'];
+
 app.use(cors({
-  origin: corsOrigin,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, postman)
+    if (!origin) return callback(null, true);
+    
+    // Normalize both incoming origin and allowed origins to compare without trailing slashes
+    const normalizedOrigin = origin.replace(/\/$/, '');
+    const isAllowed = corsOrigins.some(allowed => {
+      const normalizedAllowed = allowed.trim().replace(/\/$/, '');
+      return normalizedAllowed === '*' || normalizedAllowed === normalizedOrigin;
+    });
+
+    if (isAllowed) {
+      return callback(null, true);
+    } else {
+      console.warn(`Blocked CORS request from origin: ${origin}`);
+      return callback(new Error('Not allowed by CORS'), false);
+    }
+  },
   credentials: true
 }));
 
@@ -61,5 +81,5 @@ app.use((err, req, res, next) => {
 // Start Server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`CORS allowed origin: ${corsOrigin}`);
+  console.log(`CORS allowed origins:`, corsOrigins);
 });
