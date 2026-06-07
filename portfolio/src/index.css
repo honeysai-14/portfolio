@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 224 71.4% 4.1%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+ 
+    --primary: 262.1 83.3% 57.8%; /* Violet */
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+ 
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+ 
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+ 
+    --radius: 1rem;
+  }
+ 
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 263.4 70% 50.4%; /* Bright Violet */
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+ 
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263.4 70% 50.4%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg;
+  }
+  .glass-panel-hover {
+    @apply hover:bg-white/50 dark:hover:bg-black/50 transition-all duration-300 hover:border-white/30 dark:hover:border-white/20 hover:shadow-xl;
+  }
+  .glass-card {
+    @apply bg-white/20 dark:bg-black/30 backdrop-blur-sm border border-white/10 dark:border-white/5 rounded-2xl;
+  }
+  .glass-input {
+    @apply bg-white/20 dark:bg-black/20 border border-white/10 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary backdrop-blur-sm transition-all duration-200 outline-none;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 dark:from-violet-400 dark:via-purple-400 dark:to-cyan-400;
+  }
+}
+
+/* Custom Webkit scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/35 transition-colors;
+}
+
+/* Custom scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
